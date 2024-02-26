@@ -36,32 +36,38 @@ class ExceptionalTest {
     }
 
     @Test
-    void causeTestNonRuntime() {
+    void causeTestNonRuntimeTest() {
         var exception = new Exception();
         assertSame(exception, cause(exception), "cause for Exception() has to return same value");
     }
 
     @Test
-    void causeTestNonCauseRuntime() {
+    void causeTestNonCauseRuntimeTest() {
         var exception = new IllegalArgumentException();
         assertSame(exception, cause(exception), "cause for no cause RuntimeException() has to return same value");
     }
 
     @Test
-    void causeTestRuntimeCauseRuntime() {
+    void causeTestRuntimeCauseRuntimeTest() {
         var exception = new RuntimeException(new IllegalArgumentException());
         assertSame(exception, cause(exception), "cause for Runtime cause RuntimeException() has to return same value");
     }
 
     @Test
-    void causeTestNonRuntimeCauseRuntime() {
+    void causeTestNonRuntimeCauseRuntimeTest() {
         var exception = new IOException();
         assertSame(exception, cause(new RuntimeException(new IllegalArgumentException(exception))), "cause for Non Runtime cause RuntimeException() has to return non runtime value");
     }
 
     @Test
-    void causeTestOnlyRuntimeCauseRuntime() {
+    void causeTestOnlyRuntimeCauseRuntimeTest() {
         Throwable throwable = new IllegalStateException();
+        assertSame(throwable, cause(new RuntimeException(new IllegalArgumentException(throwable)), true), "cause for All-Runtime cause RuntimeException() has to return last one on case list");
+    }
+
+    @Test
+    void causeTestRuntimeAndNonRuntimeCauseTest() {
+        Throwable throwable = new Exception(new Exception());
         assertSame(throwable, cause(new RuntimeException(new IllegalArgumentException(throwable)), true), "cause for All-Runtime cause RuntimeException() has to return last one on case list");
     }
 
@@ -97,7 +103,7 @@ class ExceptionalTest {
 
     private static class LocalizedException extends Exception {
 
-        private static final long serialVersionUID = -1073826040201909263L;
+        private static final long serialVersionUID = -7633821068761611154L;
         private final String localizedMessage;
 
         public LocalizedException(String message, String localizedMessage) {
