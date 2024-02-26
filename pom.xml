@@ -4,7 +4,7 @@
 
     <groupId>com.github.sftwnd.crayfish.common</groupId>
     <artifactId>crayfish-common-exceptional</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <name>CrayFish :: COMMON :: Exceptional</name>
     <description>
@@ -33,7 +33,7 @@
         <url>https://github.com.github.sftwnd/crayfish-common-exceptional</url>
         <connection>scm:git:https://github.com/sftwnd/crayfish-common-exceptional.git</connection>
         <developerConnection>scm:git:git@github.com:sftwnd/crayfish-common-exceptional.git</developerConnection>
-        <tag>crayfish-common-exceptional-0.0.2</tag>
+        <tag>crayfish-common-exceptional-0.0.1</tag>
     </scm>
 
     <distributionManagement>
