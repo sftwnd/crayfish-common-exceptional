@@ -46,6 +46,32 @@ public class Exceptional {
     }
 
     /**
+     * Getting a significant cause from a Runtime Exception
+     * @param throwable An exception that could be a Runtime Exception
+     * @return significant cause
+     */
+    public static @NonNull Throwable cause(@NonNull Throwable throwable) {
+        return cause(throwable, false);
+    }
+
+    /**
+     * Getting a significant cause from a Runtime Exception
+     * @param throwable An exception that could be a Runtime Exception
+     * @param useLastRuntimeCause if there are no non-Runtime exceptions, then take the last one
+     * @return significant cause
+     */
+    public static @NonNull Throwable cause(@NonNull Throwable throwable, boolean useLastRuntimeCause) {
+        Throwable result = throwable;
+        while(result instanceof RuntimeException) {
+            if (result.getCause() == null && useLastRuntimeCause) {
+                return result;
+            }
+            result = result.getCause();
+        }
+        return Optional.ofNullable(result).orElse(throwable);
+    }
+
+    /**
      * Textual representation of Exception message text
      * @param throwable source exception
      * @return exception text representation
