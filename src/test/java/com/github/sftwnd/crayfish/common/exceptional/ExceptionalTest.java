@@ -4,11 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static com.github.sftwnd.crayfish.common.exceptional.Exceptional.cause;
 import static com.github.sftwnd.crayfish.common.exceptional.Exceptional.reInterrupt;
 import static com.github.sftwnd.crayfish.common.exceptional.Exceptional.rethrow;
 import static com.github.sftwnd.crayfish.common.exceptional.Exceptional.sneakyThrow;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExceptionalTest {
@@ -31,6 +33,36 @@ class ExceptionalTest {
     @Test
     void reInterruptOtherExceptionTest() {
         assertDoesNotThrow(() -> reInterrupt(new Exception()), "reInterrupt(Exception) has to run without Exception");
+    }
+
+    @Test
+    void causeTestNonRuntime() {
+        var exception = new Exception();
+        assertSame(exception, cause(exception), "cause for Exception() has to return same value");
+    }
+
+    @Test
+    void causeTestNonCauseRuntime() {
+        var exception = new IllegalArgumentException();
+        assertSame(exception, cause(exception), "cause for no cause RuntimeException() has to return same value");
+    }
+
+    @Test
+    void causeTestRuntimeCauseRuntime() {
+        var exception = new RuntimeException(new IllegalArgumentException());
+        assertSame(exception, cause(exception), "cause for Runtime cause RuntimeException() has to return same value");
+    }
+
+    @Test
+    void causeTestNonRuntimeCauseRuntime() {
+        var exception = new IOException();
+        assertSame(exception, cause(new RuntimeException(new IllegalArgumentException(exception))), "cause for Non Runtime cause RuntimeException() has to return non runtime value");
+    }
+
+    @Test
+    void causeTestOnlyRuntimeCauseRuntime() {
+        Throwable throwable = new IllegalStateException();
+        assertSame(throwable, cause(new RuntimeException(new IllegalArgumentException(throwable)), true), "cause for All-Runtime cause RuntimeException() has to return last one on case list");
     }
 
     @Test
