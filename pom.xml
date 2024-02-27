@@ -30,7 +30,7 @@
     </developers>
 
     <scm>
-        <url>https://github.com.github.sftwnd/crayfish-common-exceptional</url>
+        <url>https://github.com/sftwnd/crayfish-common-exceptional</url>
         <connection>scm:git:https://github.com/sftwnd/crayfish-common-exceptional.git</connection>
         <developerConnection>scm:git:git@github.com:sftwnd/crayfish-common-exceptional.git</developerConnection>
         <tag>crayfish-common-exceptional-0.0.2</tag>
